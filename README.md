@@ -15,6 +15,6 @@ Use your web browser to create your own plant diary.  Create reminders based on 
 
 ## Data Feeds
 [WeatherBit](http://api.weatherbit.io)  
-[Plant Places Specimens]("http://www.plantplaces.com/perl/mobile/viewspecimenlocations.pl")  
-[Plant Places GPS Locations]("http://www.plantplaces.com/perl/mobile/viewplantsjsonarray.pl")
+[Plant Places Specimens](http://www.plantplaces.com/perl/mobile/viewspecimenlocations.pl)  
+[Plant Places GPS Locations](http://www.plantplaces.com/perl/mobile/viewplantsjsonarray.pl)
 
