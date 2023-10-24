@@ -26,13 +26,14 @@ namespace PlantPlaces23FS7024001.Pages
 
             Task<HttpResponseMessage> task = httpClient.GetAsync("https://plantplaces.com/perl/mobile/specimenlocations.pl?Lat=39.1455&Lng=-84.509&Range=0.5&Source=location");
             HttpResponseMessage result =  task.Result;
-
+            List<Specimen> specimens = new List<Specimen>();    
             if (result.IsSuccessStatusCode)
             {
                 Task<string> readString = result.Content.ReadAsStringAsync();
                 string jsonString = readString.Result;
-                List<Specimen> specimens = Specimen.FromJson(jsonString);
+                specimens = Specimen.FromJson(jsonString);
             }
+            ViewData["Specimens"] = specimens;
         }
     }
 }
