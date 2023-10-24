@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PlantPlacesPlants;
 using PlantPlacesSpecimens;
 
 namespace PlantPlaces23FS7024001.Pages
@@ -34,6 +35,13 @@ namespace PlantPlaces23FS7024001.Pages
                 specimens = Specimen.FromJson(jsonString);
             }
             ViewData["Specimens"] = specimens;
+
+            Task<HttpResponseMessage> plantTask = httpClient.GetAsync("https://plantplaces.com/perl/mobile/viewplantsjsonarray.pl?WetTolerant=on");
+            HttpResponseMessage plantResult = plantTask.Result;
+            Task<string> plantTaskString = plantResult.Content.ReadAsStringAsync();
+            string plantJson = plantTaskString.Result;
+            List<Plant> plants = Plant.FromJson(plantJson);
+
         }
     }
 }
