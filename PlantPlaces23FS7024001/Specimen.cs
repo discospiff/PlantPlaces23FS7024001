@@ -78,14 +78,7 @@ namespace PlantPlacesSpecimens
         {
             if (reader.TokenType == JsonToken.Null) return null;
             var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case " ":
-                    return Address.Empty;
-                case "3400 Vine Street Cincinnati OH 45220":
                     return Address.The3400VineStreetCincinnatiOh45220;
-            }
-            throw new Exception("Cannot unmarshal type Address");
         }
 
         public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
