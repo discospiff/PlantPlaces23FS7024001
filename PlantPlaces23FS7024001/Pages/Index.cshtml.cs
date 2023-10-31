@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using PlantPlacesPlants;
 using PlantPlacesSpecimens;
 using System.Runtime.CompilerServices;
@@ -44,8 +46,30 @@ namespace PlantPlaces23FS7024001.Pages
                 {
                     Task<string> readString = result.Content.ReadAsStringAsync();
                     string jsonString = readString.Result;
-                    specimens = Specimen.FromJson(jsonString);
+
+                    // Validate our JSON against a schema.
+                    JSchema schema = JSchema.Parse(System.IO.File.ReadAllText("specimenschema.json"));
+
+                    // get the initial array that starts our JSON.
+                    JArray jsonArray = JArray.Parse(jsonString);
+
+                    // A collection of strings that will hold any validation errors.
+                    IList<string> validationEvents = new List<string>();
+
+                    // Let's see if it's valid.
+                    if (jsonArray.IsValid(schema, out validationEvents)) {
+                        specimens = Specimen.FromJson(jsonString);
+                    } else
+                    {
+                        // iterate over the error messages
+                        foreach(string evt in validationEvents)
+                        {
+                            Console.WriteLine(evt);
+                        }
+                    }
+
                 }
+                // assign the value of the specimens variable to the ViewData["Specimens"] variable.
                 ViewData["Specimens"] = specimens;
 
                 HttpResponseMessage plantResult = await plantTask;
