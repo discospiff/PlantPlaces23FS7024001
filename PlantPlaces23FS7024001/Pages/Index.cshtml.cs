@@ -5,6 +5,7 @@ using Newtonsoft.Json.Schema;
 using PlantPlacesPlants;
 using PlantPlacesSpecimens;
 using System.Runtime.CompilerServices;
+using WeatherFeed;
 
 namespace PlantPlaces23FS7024001.Pages
 {
@@ -38,8 +39,16 @@ namespace PlantPlaces23FS7024001.Pages
         private async Task<List<Specimen>> GetData() {
             return await Task.Run(async () =>
             {
+
+               var config = new ConfigurationBuilder()
+                .AddUserSecrets<Program>()
+                .Build();
+                string apikey = config["weatherapikey"];
+
                 Task<HttpResponseMessage> plantTask = httpClient.GetAsync("https://plantplaces.com/perl/mobile/viewplantsjsonarray.pl?WetTolerant=on");
                 Task<HttpResponseMessage> task = httpClient.GetAsync("https://plantplaces.com/perl/mobile/specimenlocations.pl?Lat=39.1455&Lng=-84.509&Range=0.5&Source=location");
+                Task<HttpResponseMessage> weatherTask = httpClient.GetAsync("https://api.weatherbit.io/v2.0/current?&city=Cincinnati&country=USA&key=" + apikey);
+                
                 HttpResponseMessage result = task.Result;
                 List<Specimen> specimens = new List<Specimen>();
                 if (result.IsSuccessStatusCode)
@@ -93,6 +102,26 @@ namespace PlantPlaces23FS7024001.Pages
                     }
                 }
                 ViewData["Specimens"] = waterLovingSpecimens;
+
+                HttpResponseMessage weatherResponse = await weatherTask;
+                Task<string> weatherReadTask = weatherResponse.Content.ReadAsStringAsync();
+                string weatherJson = weatherReadTask.Result;
+
+                // parse the weather data
+                Weather weather = Weather.FromJson(weatherJson);
+                List<Datum> weatherData = weather.Data;
+                long precip = 0;
+
+                foreach (Datum datum in weatherData)
+                {
+                    precip = datum.Precip;
+                }
+                if (precip < 1) {
+                    ViewData["Message"] = "It's dry!  Water these plants.";
+                } else
+                {
+                    ViewData["Message"] = "Rain expected.  No need to water.";
+                }
                 return waterLovingSpecimens;
             });
         }
