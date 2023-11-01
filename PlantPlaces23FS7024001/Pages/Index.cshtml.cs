@@ -31,6 +31,9 @@ namespace PlantPlaces23FS7024001.Pages
             Task<List<Specimen>> task = GetData();
             List<Specimen> specimens = task.Result;
             ViewData["Specimens"] = specimens;
+
+            // populate our list of specimens in the Specimen Repository.
+            SpecimenRepository.allSpecimens = specimens;
         }
 
         /// <summary>
