@@ -1,0 +1,26 @@
+body {
+	background-color: #F2BC57;
+	color: #573645
+}
+
+#header {
+	position: fixed;
+	background-color: #573645;
+	color: #F2BC57;
+	width: 100%;
+	margin-top: 0px;
+	left: 0;
+	top: 0;
+	vertical-align: top;
+	z-index: 100;
+	height: 4em;
+}
+
+.content {
+	margin-top: 5em;
+	position: relative;
+}
+
+ol li {
+	font-family: 'Trebuchet MS', 'Lucida Sans Uicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
