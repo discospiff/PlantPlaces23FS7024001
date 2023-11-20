@@ -1,6 +1,7 @@
 ﻿@page
 @model PlantPlaces23FS7024001.Pages.UploadPlantXmlModel
 @{
+    var status = ViewData["UploadParseResult"];
 }
 
 <form method="post" enctype="multipart/form-data">
@@ -8,3 +9,4 @@
    <input type="submit"/>
 
 </form>
+Status: @status
