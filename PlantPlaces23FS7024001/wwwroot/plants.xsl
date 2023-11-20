@@ -15,7 +15,7 @@
 						<th>Planted By</th>
 						<th>Comments</th>
 					</tr>
-					<xsl:for-each select="/plant/specimens/specimen">
+					<xsl:for-each select="/plant/specimens/specimen[1]">
 						<tr>
 							<td>
 								<xsl:value-of select="latitude"/>
