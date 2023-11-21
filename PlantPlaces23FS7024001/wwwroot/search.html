@@ -3,6 +3,17 @@
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="css/styles.css" type="text/css" />
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" />
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function () {
+			$("#Combined_Name").autocomplete({
+				source: ["White Oak", "White Pine", "White Sunflower", "White Rose", "White Redbud"],
+				minLength: 3
+			})
+		});
+	</script>
 	<title>My Favorite Plants</title>
 </head>
 <body>
@@ -16,7 +27,7 @@
 		<fieldset>
 			<legend>Search</legend>
 			<form action="https://plantplaces.com/perl/viewplants.pl" method="GET">
-				<input name="Combined_Name" type="text" placeholder="Enter Plant Name" />
+				<input name="Combined_Name" id="Combined_Name" type="text" placeholder="Enter Plant Name" />
 				<input type="submit" />
 			</form>
 		</fieldset>
